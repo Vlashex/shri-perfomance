@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[935],{935:(s,e,c)=>{s.exports=c.p+"icons/logo.67c159bc892217e8dd0a.svg"}}]);

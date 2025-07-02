@@ -1,10 +1,31 @@
-import React, { useRef, useState, useEffect, Suspense, lazy } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
 import "./styles/reset.css";
 import "./styles/styles.css";
 
-const Logo = lazy(() => import("./assets/logo.svg?react"));
+import { icons } from "./svg-manifest";
+import { LazyIcon } from "./LazyIcon";
+
+function lazyLoadBackgroundImage(el, iconName) {
+  icons[iconName]().then((url) => {
+    const path = url.default || url;
+    el.style.backgroundImage = `url("${path}")`;
+  });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      lazyLoadBackgroundImage(entry.target, entry.target.dataset.iconName);
+      observer.unobserve(entry.target);
+    }
+  });
+});
+
+document
+  .querySelectorAll("[data-icon-name]")
+  .forEach((el) => observer.observe(el));
 
 function Header() {
   let [expanded, setExpanded] = useState(false);
@@ -20,10 +41,17 @@ function Header() {
 
   return (
     <header className="header">
-      <a href="/">
-        <Suspense>
-          <Logo className="header__logo" aria-label="Яндекс.Дом" />
-        </Suspense>
+      <a href="/" aria-label="Яндекс.Дом" className="header__logo-wrapper">
+        <LazyIcon
+          iconName="logo"
+          className="header__logo"
+          style={{
+            width: "6.75rem",
+            height: "2.3125rem",
+            marginRight: "3.25rem",
+            flex: "0 0 auto",
+          }}
+        />
       </a>
       <button
         className="header__menu"
