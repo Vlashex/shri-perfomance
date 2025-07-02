@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
-import { createRoot } from 'react-dom/client';
+import React, { useRef, useState, useEffect, Suspense, lazy } from "react";
+import { createRoot } from "react-dom/client";
 
-import './styles/reset.css';
-import './styles/styles.css';
+import "./styles/reset.css";
+import "./styles/styles.css";
+
+const Logo = lazy(() => import("./assets/logo.svg?react"));
 
 function Header() {
-  let [expanded, setExpanded] = React.useState(false);
-  let [toggled, setToggled] = React.useState(false);
+  let [expanded, setExpanded] = useState(false);
+  let [toggled, setToggled] = useState(false);
 
   const onClick = () => {
     if (!toggled) {
@@ -19,7 +20,11 @@ function Header() {
 
   return (
     <header className="header">
-      <a href="/" className="header__logo" aria-label="Яндекс.Дом"></a>
+      <a href="/">
+        <Suspense>
+          <Logo className="header__logo" aria-label="Яндекс.Дом" />
+        </Suspense>
+      </a>
       <button
         className="header__menu"
         aria-expanded={expanded ? "true" : "false"}
@@ -61,11 +66,11 @@ function Header() {
 }
 
 function Event(props) {
-  const ref = React.useRef();
+  const ref = useRef();
 
   const { onSize } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const width = ref.current.offsetWidth;
     const height = ref.current.offsetHeight;
     if (onSize) {
@@ -225,12 +230,12 @@ for (let i = 0; i < 6; ++i) {
 const TABS_KEYS = Object.keys(TABS);
 
 function Main() {
-  const ref = React.useRef();
-  const initedRef = React.useRef(false);
-  const [activeTab, setActiveTab] = React.useState("");
-  const [hasRightScroll, setHasRightScroll] = React.useState(false);
+  const ref = useRef();
+  const initedRef = useRef(false);
+  const [activeTab, setActiveTab] = useState("");
+  const [hasRightScroll, setHasRightScroll] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!activeTab && !initedRef.current) {
       initedRef.current = true;
       setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
@@ -246,7 +251,7 @@ function Main() {
     sizes = [...sizes, size];
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
     const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
 
@@ -431,17 +436,6 @@ function Main() {
   );
 }
 
-setTimeout(() => {
-  const root = ReactDOM.createRoot(document.getElementById("app"));
-  root.render(
-    <>
-      <Header />
-      <Main />
-    </>
-  );
-}, 100);
-
-
 function App() {
   return (
     <>
@@ -451,5 +445,5 @@ function App() {
   );
 }
 
-const root = createRoot(document.getElementById('app'));
+const root = createRoot(document.getElementById("app"));
 root.render(<App />);
