@@ -6,6 +6,7 @@ import "./styles/styles.css";
 
 import { icons } from "./svg-manifest";
 import { LazyIcon } from "./LazyIcon";
+import { LazySelect } from "./LazySelect";
 
 function lazyLoadBackgroundImage(el, iconName) {
   icons[iconName]().then((url) => {
@@ -287,15 +288,29 @@ function Main() {
     sizes = [...sizes, size];
   };
 
+  const dashRef = useRef();
+
   useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-    const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
 
     const newHasRightScroll = sumWidth > ref.current.offsetWidth;
     if (newHasRightScroll !== hasRightScroll) {
       setHasRightScroll(newHasRightScroll);
     }
-  });
+
+    (async () => {
+      const el = dashRef.current;
+      if (!el) return;
+
+      const mod =
+        window.innerWidth <= 768
+          ? await import("./assets/main.webp")
+          : await import("./assets/bg@2x.webp");
+
+      const url = mod.default || mod;
+      el.style.background = `no-repeat 50% 50% url(${url})`;
+    })();
+  }, []);
 
   const onArrowCLick = () => {
     const scroller = ref.current.querySelector(
@@ -315,7 +330,7 @@ function Main() {
         <h2 className="section__title section__title-header section__main-title">
           Главное
         </h2>
-        <div className="hero-dashboard">
+        <div ref={dashRef} className="hero-dashboard">
           <div className="hero-dashboard__primary">
             <h3 className="hero-dashboard__title">Привет, Геннадий!</h3>
             <p className="hero-dashboard__subtitle">
@@ -410,17 +425,18 @@ function Main() {
         <div className="section__title">
           <h2 className="section__title-header">Избранные устройства</h2>
 
-          <select
+          <LazySelect
             className="section__select"
             defaultValue="all"
             onInput={onSelectInput}
+            iconName="sectionSelect"
           >
             {TABS_KEYS.map((key) => (
               <option key={key} value={key}>
                 {TABS[key].title}
               </option>
             ))}
-          </select>
+          </LazySelect>
 
           <ul role="tablist" className="section__tabs">
             {TABS_KEYS.map((key) => (
