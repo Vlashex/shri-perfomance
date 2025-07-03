@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[786],{786:(s,c,e)=>{s.exports=e.p+"icons/arrow-down.60fc682f8c0f5090796f.svg"}}]);

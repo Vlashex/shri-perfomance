@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[726],{726:(e,s,p)=>{e.exports=p.p+"icons/icon_temperature.7dfddd93951249d35902.svg"}}]);

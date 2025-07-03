@@ -32,8 +32,6 @@ function Header() {
   let [expanded, setExpanded] = useState(false);
   let [toggled, setToggled] = useState(false);
 
-  console.log(icons);
-
   const onClick = () => {
     if (!toggled) {
       setToggled(true);
@@ -368,7 +366,6 @@ function Main() {
   useEffect(() => {
     import("./assets/arrow-left.png").then((mod) => {
       const url = mod.default || mod;
-      console.log(iconArrowRef);
       iconArrowRef.current.style.background = `no-repeat 50% 50% url(${url})`;
     });
   }, [hasRightScroll]);
