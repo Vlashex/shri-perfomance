@@ -58,6 +58,14 @@ function Header() {
         aria-expanded={expanded ? "true" : "false"}
         onClick={onClick}
       >
+        <LazyIcon
+          style={{
+            background: "50% 50% no-repeat transparent",
+            height: "100%",
+            width: "100%",
+          }}
+          iconName="headerBtn"
+        />
         <span className="header__menu-text a11y-hidden">
           {expanded ? "Закрыть меню" : "Открыть меню"}
         </span>
