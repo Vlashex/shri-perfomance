@@ -277,7 +277,7 @@ function Main() {
       initedRef.current = true;
       setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
     }
-  });
+  }, [activeTab, initedRef]);
 
   const onSelectInput = (event) => {
     setActiveTab(event.target.value);
@@ -297,7 +297,9 @@ function Main() {
     if (newHasRightScroll !== hasRightScroll) {
       setHasRightScroll(newHasRightScroll);
     }
+  }, [sizes]);
 
+  useEffect(() => {
     (async () => {
       const el = dashRef.current;
       if (!el) return;
