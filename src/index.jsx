@@ -352,8 +352,8 @@ function Main() {
     (async () => {
       const mod =
         window.width <= 768
-          ? await import("./assets/main.png")
-          : await import("./assets/bg@2x.png");
+          ? await import("./assets/main.webp")
+          : await import("./assets/bg@2x.webp");
 
       const url = mod.default || mod;
       dashboardRef.current.style.background = `no-repeat 50% 50% url("${url}")`;
