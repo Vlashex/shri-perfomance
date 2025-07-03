@@ -32,6 +32,8 @@ function Header() {
   let [expanded, setExpanded] = useState(false);
   let [toggled, setToggled] = useState(false);
 
+  console.log(icons);
+
   const onClick = () => {
     if (!toggled) {
       setToggled(true);
@@ -102,10 +104,31 @@ function Header() {
   );
 }
 
+// .event__icon_temp {
+//   background-image: url(../assets/icon_temperature.svg);
+// }
+
+// .event__icon_temp2 {
+//   background-image: url(../assets/icon_temperature_2.svg);
+// }
+
+// .event__icon_light {
+//   background-image: url(../assets/icon_sun.svg);
+// }
+
+// .event__icon_light2 {
+//   background-image: url(../assets/icon_sun_2.svg);
+// }
+
+// .event__icon_schedule {
+//   background-image: url(../assets/icon_scheduled.svg);
+// }
+
 function Event(props) {
   const ref = useRef();
+  const iconRef = useRef(null);
 
-  const { onSize } = props;
+  const { onSize, icon } = props;
 
   useEffect(() => {
     const width = ref.current.offsetWidth;
@@ -115,11 +138,22 @@ function Event(props) {
     }
   });
 
+  useEffect(() => {
+    const el = iconRef.current;
+    if (!el || !icon) return;
+
+    icons[icon]?.().then((mod) => {
+      const url = mod.default || mod;
+      el.style.backgroundImage = `url("${url}")`;
+    });
+  }, [icon]);
+
   return (
     <li ref={ref} className={"event" + (props.slim ? " event_slim" : "")}>
       <button className="event__button">
         <span
-          className={`event__icon event__icon_${props.icon}`}
+          ref={iconRef}
+          className={`event__icon`}
           role="img"
           aria-label={props.iconLabel}
         ></span>
@@ -310,13 +344,42 @@ function Main() {
     }
   };
 
+  const dashboardRef = useRef();
+  const iconRainRef = useRef();
+  const iconArrowRef = useRef();
+
+  useEffect(() => {
+    (async () => {
+      const mod =
+        window.width <= 768
+          ? await import("./assets/main.png")
+          : await import("./assets/bg@2x.png");
+
+      const url = mod.default || mod;
+      dashboardRef.current.style.background = `no-repeat 50% 50% url("${url}")`;
+      // dashboardRef.current.style.backgroundSize = "cover";
+    })();
+    import("./assets/cloud-drizzle.svg").then((mod) => {
+      const url = mod.default || mod;
+      iconRainRef.current.style.backgroundImage = `url("${url}")`;
+    });
+  }, []);
+
+  useEffect(() => {
+    import("./assets/arrow-left.png").then((mod) => {
+      const url = mod.default || mod;
+      console.log(iconArrowRef);
+      iconArrowRef.current.style.background = `no-repeat 50% 50% url(${url})`;
+    });
+  }, [hasRightScroll]);
+
   return (
     <main className="main">
       <section className="section main__general">
         <h2 className="section__title section__title-header section__main-title">
           Главное
         </h2>
-        <div className="hero-dashboard">
+        <div ref={dashboardRef} className="hero-dashboard">
           <div className="hero-dashboard__primary">
             <h3 className="hero-dashboard__title">Привет, Геннадий!</h3>
             <p className="hero-dashboard__subtitle">
@@ -336,6 +399,7 @@ function Main() {
                   +19
                   <span className="a11y-hidden">°</span>
                   <div
+                    ref={iconRainRef}
                     className="hero-dashboard__icon hero-dashboard__icon_rain"
                     role="img"
                     aria-label="Дождь"
@@ -462,7 +526,11 @@ function Main() {
             </div>
           ))}
           {hasRightScroll && (
-            <div className="section__arrow" onClick={onArrowCLick}></div>
+            <div
+              ref={iconArrowRef}
+              className="section__arrow"
+              onClick={onArrowCLick}
+            ></div>
           )}
         </div>
       </section>
