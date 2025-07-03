@@ -6,6 +6,7 @@ import "./styles/styles.css";
 
 import { icons } from "./svg-manifest";
 import { LazyIcon } from "./LazyIcon";
+import { LazySelect } from "./LazySelect";
 
 function lazyLoadBackgroundImage(el, iconName) {
   icons[iconName]().then((url) => {
@@ -365,7 +366,6 @@ function Main() {
           </ul>
         </div>
       </section>
-
       <section className="section main__scripts">
         <h2 className="section__title section__title-header">
           Избранные сценарии
@@ -405,23 +405,21 @@ function Main() {
           />
         </ul>
       </section>
-
       <section className="section main__devices">
         <div className="section__title">
           <h2 className="section__title-header">Избранные устройства</h2>
-
-          <select
+          <LazySelect
             className="section__select"
             defaultValue="all"
             onInput={onSelectInput}
+            iconName="sectionSelect"
           >
             {TABS_KEYS.map((key) => (
               <option key={key} value={key}>
                 {TABS[key].title}
               </option>
             ))}
-          </select>
-
+          </LazySelect>
           <ul role="tablist" className="section__tabs">
             {TABS_KEYS.map((key) => (
               <li
