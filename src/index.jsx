@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "./styles/reset.css";
 import "./styles/styles.css";
 
-import { icons } from "./svg-manifest";
+import { icons, iconUrls } from "./svg-manifest";
 import { LazyIcon } from "./LazyIcon";
 import { LazySelect } from "./LazySelect";
 
@@ -134,27 +134,17 @@ function Event(props) {
     if (onSize) {
       onSize({ width, height });
     }
-  });
-
-  useEffect(() => {
-    const el = iconRef.current;
-    if (!el || !icon) return;
-
-    icons[icon]?.().then((mod) => {
-      const url = mod.default || mod;
-      el.style.backgroundImage = `url("${url}")`;
-    });
-  }, [icon]);
+  }, []);
 
   return (
     <li ref={ref} className={"event" + (props.slim ? " event_slim" : "")}>
       <button className="event__button">
-        <span
-          ref={iconRef}
+        <img
+          loading="lazy"
           className={`event__icon`}
-          role="img"
-          aria-label={props.iconLabel}
-        ></span>
+          src={iconUrls[icon]}
+          alt=""
+        />
         <h4 className="event__title">{props.title}</h4>
         {props.subtitle && (
           <span className="event__subtitle">{props.subtitle}</span>
@@ -309,7 +299,7 @@ function Main() {
       initedRef.current = true;
       setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
     }
-  });
+  }, []);
 
   const onSelectInput = (event) => {
     setActiveTab(event.target.value);
@@ -328,7 +318,7 @@ function Main() {
     if (newHasRightScroll !== hasRightScroll) {
       setHasRightScroll(newHasRightScroll);
     }
-  });
+  }, []);
 
   const onArrowCLick = () => {
     const scroller = ref.current.querySelector(
