@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { icons } from "./svg-manifest";
+import { icons } from "../svg-manifest";
 
 export function LazySelect({
   iconName,

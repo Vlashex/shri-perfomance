@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { icons } from "./svg-manifest";
+import { icons } from "../svg-manifest";
 
 export function LazyIcon({ iconName, className, style }) {
   const ref = useRef(null);

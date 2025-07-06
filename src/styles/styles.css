@@ -269,26 +269,6 @@ body {
   box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
 }
 
-.hero-dashboard {
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  gap: 0.9375rem;
-  height: 20.6875rem;
-  /*background-size: cover;*/
-  background-size: 1260px;
-  border-radius: 1.25rem;
-}
-
-@media (max-width: 768px) {
-  .hero-dashboard {
-    flex-direction: column;
-    gap: 1.25rem;
-    height: auto;
-    margin-bottom: 0.3125rem;
-    background-image: url("../assets/main.webp");
-  }
-}
 
 .hero-dashboard__primary {
   flex: 1 1 auto;

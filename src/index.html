@@ -1,24 +1,54 @@
 <!doctype html>
 <html lang="ru">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" as="image" href="/src/assets/bg@2x.webp" />
     <title>Яндекс.Дом</title>
-</head>
 
-<body>
+    <style>
+      .hero-dashboard {
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        gap: 0.9375rem;
+        height: 20.6875rem;
+        background: no-repeat 50% 50% url("assets/bg@2x.webp");
+        /*background-size: cover;*/
+        background-size: 1260px;
+        border-radius: 1.25rem;
+      }
+      @media (max-width: 768px) {
+        .hero-dashboard {
+          flex-direction: column;
+          gap: 1.25rem;
+          height: auto;
+          margin-bottom: 0.3125rem;
+          background-image: url("assets/main.webp")
+        }
+      }
+    </style>
+  </head>
+
+  <body>
     <div id="app"></div>
 
     <footer class="footer">
-        <ul class="footer__list">
-            <li class="footer__item"><a class="footer__link" href="/">Помощь</a></li>
-            <li class="footer__item"><a class="footer__link" href="/">Обратная связь</a></li>
-            <li class="footer__item"><a class="footer__link" href="/">Разработчикам</a></li>
-            <li class="footer__item"><a class="footer__link" href="/">Условия использования</a></li>
-        </ul>
-        <div class="footer__copyright">© 1997–2023 ООО «Яндекс»</div>
+      <ul class="footer__list">
+        <li class="footer__item">
+          <a class="footer__link" href="/">Помощь</a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="/">Обратная связь</a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="/">Разработчикам</a>
+        </li>
+        <li class="footer__item">
+          <a class="footer__link" href="/">Условия использования</a>
+        </li>
+      </ul>
+      <div class="footer__copyright">© 1997–2023 ООО «Яндекс»</div>
     </footer>
-</body>
-
+  </body>
 </html>
