@@ -1,9 +1,14 @@
-import React from "react";
+import React, { lazy } from "react";
 import { useEffect, useRef, useState } from "react";
 import { LazySelect } from "./LazySelect";
 import { TABS, TABS_KEYS } from "../TABS";
 
-import Event from "./Event";
+const Event = lazy(() => import("./Event"));
+import { iconUrls } from "../svg-manifest";
+
+import bg2x from "../assets/bg@2x.webp";
+import mainBg from "../assets/main.webp";
+import drizleIcon from "../assets/cloud-drizzle.svg";
 
 export function Main() {
   const ref = useRef();
@@ -71,7 +76,18 @@ export function Main() {
         <h2 className="section__title section__title-header section__main-title">
           Главное
         </h2>
-        <div className="hero-dashboard">
+        <div
+          className="hero-dashboard"
+          style={
+            window?.innerWidth <= 768
+              ? {
+                  background: `no-repeat 50% 50% url(${mainBg})`,
+                }
+              : {
+                  background: `no-repeat 50% 50% url(${bg2x})`,
+                }
+          }
+        >
           <div className="hero-dashboard__primary">
             <h3 className="hero-dashboard__title">Привет, Геннадий!</h3>
             <p className="hero-dashboard__subtitle">
@@ -90,34 +106,58 @@ export function Main() {
                 <div className="hero-dashboard__item-details">
                   +19
                   <span className="a11y-hidden">°</span>
-                  <div
-                    className="hero-dashboard__icon hero-dashboard__icon_rain"
-                    role="img"
+                  <img
+                    className="hero-dashboard__icon"
                     aria-label="Дождь"
-                  ></div>
+                    alt="Дождь"
+                    src={drizleIcon}
+                  />
                 </div>
               </li>
             </ul>
           </div>
           <ul className="hero-dashboard__schedule">
-            <Event
-              icon="temp"
-              iconLabel="Температура"
-              title="Philips Cooler"
-              subtitle="Начнет охлаждать в 16:30"
-            />
-            <Event
-              icon="light"
-              iconLabel="Освещение"
-              title="Xiaomi Yeelight LED Smart Bulb"
-              subtitle="Включится в 17:00"
-            />
-            <Event
-              icon="light"
-              iconLabel="Освещение"
-              title="Xiaomi Yeelight LED Smart Bulb"
-              subtitle="Включится в 17:00"
-            />
+            <li className="event">
+              <button className="event__button">
+                <img
+                  width={24}
+                  height={24}
+                  className={`event__icon`}
+                  src={iconUrls.temp}
+                  alt="Температура"
+                />
+                <h4 className="event__title">Philips Cooler</h4>
+                <span className="event__subtitle">
+                  Начнет охлаждать в 16:30
+                </span>
+              </button>
+            </li>
+            <li className="event">
+              <button className="event__button">
+                <img
+                  width={24}
+                  height={24}
+                  className={`event__icon`}
+                  src={iconUrls.light}
+                  alt="Освещение"
+                />
+                <h4 className="event__title">Xiaomi Yeelight LED Smart Bulb</h4>
+                <span className="event__subtitle">Включится в 17:00</span>
+              </button>
+            </li>
+            <li className="event">
+              <button className="event__button">
+                <img
+                  width={24}
+                  height={24}
+                  className={`event__icon`}
+                  src={iconUrls.light}
+                  alt="Освещение"
+                />
+                <h4 className="event__title">Xiaomi Yeelight LED Smart Bulb</h4>
+                <span className="event__subtitle">Включится в 17:00</span>
+              </button>
+            </li>
           </ul>
         </div>
       </section>
