@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import "./styles/reset.css";
 import "./styles/styles.css";
 
-import { icons } from "./svg-manifest";
+import { icons, iconUrls } from "./svg-manifest";
 import { LazyIcon } from "./LazyIcon";
 import { LazySelect } from "./LazySelect";
 
@@ -105,7 +105,7 @@ function Header() {
 function Event(props) {
   const ref = useRef();
 
-  const { onSize } = props;
+  const { onSize, icon } = props;
 
   useEffect(() => {
     const width = ref.current.offsetWidth;
@@ -118,11 +118,12 @@ function Event(props) {
   return (
     <li ref={ref} className={"event" + (props.slim ? " event_slim" : "")}>
       <button className="event__button">
-        <span
-          className={`event__icon event__icon_${props.icon}`}
-          role="img"
-          aria-label={props.iconLabel}
-        ></span>
+        <img
+          loading="lazy"
+          className={`event__icon`}
+          src={iconUrls[icon]}
+          alt=""
+        />
         <h4 className="event__title">{props.title}</h4>
         {props.subtitle && (
           <span className="event__subtitle">{props.subtitle}</span>
